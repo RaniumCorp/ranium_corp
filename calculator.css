@@ -34,6 +34,15 @@ body {
     padding: 0 1rem;
     width: 100%;
 }
+@font-face {
+    font-family: 'Good Times';
+    src: url('./fonts/good-times.woff2') format('woff2'),
+         url('./fonts/good-times.woff') format('woff'),
+         url('./fonts/good-times.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* Good Times Font */
 .logo span,

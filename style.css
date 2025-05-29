@@ -29,6 +29,16 @@ body {
     padding: 0 24px;
 }
 
+@font-face {
+    font-family: 'Good Times';
+    src: url('./fonts/good-times.woff2') format('woff2'),
+         url('./fonts/good-times.woff') format('woff'),
+         url('./fonts/good-times.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Good Times Font for Brand and Product Names */
 .logo span,
 .hero-content h1,
@@ -40,6 +50,7 @@ body {
     font-weight: 700;
     letter-spacing: 1px;
 }
+
 
 /* Navigation */
 .navbar {
