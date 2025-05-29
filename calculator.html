@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IP Camera System Calculator - Ranium Corp</title>
+    <link rel="icon" type="image/svg+xml" href="ranium_logo.svg" />
+    <link rel="icon" type="image/png" href="ranium_logo.png" />
+    <!-- Fallback -->
+    <link rel="apple-touch-icon" href="ranium_logo.png" />
+    <link rel="stylesheet" href="calculator.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.cdnfonts.com/css/good-times" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="logo">
+            <div class="logo-icon">
+              <img
+                src="ranium_logo.svg"
+                alt="Ranium Corp Logo"
+                class="logo-svg"
+              />
+            </div>
+            <span>Ranium Corp</span>
+          </div>
+          <div class="nav-buttons">
+            <a href="index.html" class="btn-outline">
+              <i class="fas fa-arrow-left"></i>
+              <span class="btn-text">Back to Home</span>
+            </a>
+            <a href="tel:+918102614395" class="btn-primary">Get Quote</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="calculator-main">
+      <div class="container">
+        <div class="calculator-header">
+          <h1>
+            <i class="fas fa-calculator"></i>
+            <span class="header-text">IP Camera System Calculator</span>
+          </h1>
+          <p>Calculate the cost of your custom security camera setup</p>
+        </div>
+
+        <div class="calculator-container">
+          <div class="calculator-form">
+            <div class="form-section">
+              <h3><i class="fas fa-video"></i> Camera Configuration</h3>
+              <div class="input-group">
+                <label for="camera-count">Number of Cameras</label>
+                <input
+                  type="number"
+                  id="camera-count"
+                  min="1"
+                  max="64"
+                  value="8"
+                  onchange="calculateTotal()"
+                />
+                <small>Choose between 1-64 cameras for your setup</small>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="fas fa-list"></i> System Components</h3>
+              <div class="components-list">
+                <div class="component-item">
+                  <div class="component-info">
+                    <i class="fas fa-video"></i>
+                    <div class="component-details">
+                      <h4>5MP IP Cameras</h4>
+                      <p><span id="camera-qty">8</span> units</p>
+                    </div>
+                  </div>
+                  <div class="component-price" id="camera-price">
+                    ₹24,000 - ₹28,000
+                  </div>
+                </div>
+
+                <div class="component-item">
+                  <div class="component-info">
+                    <i class="fas fa-server"></i>
+                    <div class="component-details">
+                      <h4 id="nvr-type">10-Channel NVR</h4>
+                      <p>Network Video Recorder</p>
+                    </div>
+                  </div>
+                  <div class="component-price" id="nvr-price">
+                    ₹6,000 - ₹7,000
+                  </div>
+                </div>
+
+                <div class="component-item">
+                  <div class="component-info">
+                    <i class="fas fa-hdd"></i>
+                    <div class="component-details">
+                      <h4>1TB HDD Storage</h4>
+                      <p>Surveillance grade hard drive</p>
+                    </div>
+                  </div>
+                  <div class="component-price">₹6,000 - ₹7,000</div>
+                </div>
+
+                <div class="component-item">
+                  <div class="component-info">
+                    <i class="fas fa-ethernet"></i>
+                    <div class="component-details">
+                      <h4>CAT6E Cable</h4>
+                      <p>305 meters premium cable</p>
+                    </div>
+                  </div>
+                  <div class="component-price">₹7,000 - ₹9,000</div>
+                </div>
+
+                <div class="component-item">
+                  <div class="component-info">
+                    <i class="fas fa-tools"></i>
+                    <div class="component-details">
+                      <h4>Professional Installation</h4>
+                      <p><span id="install-qty">8</span> cameras @ ₹600 each</p>
+                    </div>
+                  </div>
+                  <div class="component-price" id="install-price">₹4,800</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section total-section">
+              <div class="total-price">
+                <div class="total-header">
+                  <h3><i class="fas fa-calculator"></i> Total System Cost</h3>
+                </div>
+                <div class="price-range">
+                  <div class="price-item">
+                    <span>Minimum Price:</span>
+                    <span class="price-value" id="min-total">₹47,800</span>
+                  </div>
+                  <div class="price-item">
+                    <span>Maximum Price:</span>
+                    <span class="price-value" id="max-total">₹55,800</span>
+                  </div>
+                </div>
+                <div class="savings-note">
+                  <i class="fas fa-info-circle"></i>
+                  <span
+                    >Includes professional installation & 1-year warranty</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="action-buttons">
+                <button class="btn-primary large" onclick="requestQuote()">
+                  <i class="fas fa-phone"></i> Call for Final Quote
+                </button>
+                <a href="index.html" class="btn-outline">
+                  <i class="fas fa-arrow-left"></i> Back to Products
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="calculator-info">
+            <div class="info-card">
+              <h3><i class="fas fa-shield-alt"></i> Why Choose Our System?</h3>
+              <ul>
+                <li>
+                  <i class="fas fa-check"></i> Professional grade 5MP cameras
+                </li>
+                <li><i class="fas fa-check"></i> 24/7 recording capability</li>
+                <li><i class="fas fa-check"></i> Remote mobile monitoring</li>
+                <li><i class="fas fa-check"></i> Night vision technology</li>
+                <li><i class="fas fa-check"></i> Weather resistant design</li>
+              </ul>
+            </div>
+
+            <div class="info-card">
+              <h3><i class="fas fa-cogs"></i> Installation Includes</h3>
+              <ul>
+                <li>
+                  <i class="fas fa-check"></i> Camera mounting & positioning
+                </li>
+                <li><i class="fas fa-check"></i> Cable routing & management</li>
+                <li><i class="fas fa-check"></i> NVR setup & configuration</li>
+                <li><i class="fas fa-check"></i> Mobile app installation</li>
+                <li><i class="fas fa-check"></i> System testing & training</li>
+              </ul>
+            </div>
+
+            <div class="info-card contact-card">
+              <h3><i class="fas fa-headset"></i> Need Help?</h3>
+              <p>
+                Our experts are ready to help you design the perfect security
+                system for your needs.
+              </p>
+              <a href="tel:+918102614395" class="contact-button">
+                <i class="fas fa-phone"></i> +91 8102614395
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Info Cards -->
+        <div class="mobile-info-cards">
+          <div class="info-card">
+            <h3><i class="fas fa-shield-alt"></i> Why Choose Our System?</h3>
+            <ul>
+              <li>
+                <i class="fas fa-check"></i> Professional grade 5MP cameras
+              </li>
+              <li><i class="fas fa-check"></i> 24/7 recording capability</li>
+              <li><i class="fas fa-check"></i> Remote mobile monitoring</li>
+              <li><i class="fas fa-check"></i> Night vision technology</li>
+              <li><i class="fas fa-check"></i> Weather resistant design</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3><i class="fas fa-cogs"></i> Installation Includes</h3>
+            <ul>
+              <li>
+                <i class="fas fa-check"></i> Camera mounting & positioning
+              </li>
+              <li><i class="fas fa-check"></i> Cable routing & management</li>
+              <li><i class="fas fa-check"></i> NVR setup & configuration</li>
+              <li><i class="fas fa-check"></i> Mobile app installation</li>
+              <li><i class="fas fa-check"></i> System testing & training</li>
+            </ul>
+          </div>
+
+          <div class="info-card contact-card">
+            <h3><i class="fas fa-headset"></i> Need Help?</h3>
+            <p>
+              Our experts are ready to help you design the perfect security
+              system for your needs.
+            </p>
+            <a href="tel:+918102614395" class="contact-button">
+              <i class="fas fa-phone"></i> +91 8102614395
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-left">
+            <div class="logo">
+              <div class="logo-icon">
+                <img
+                  src="ranium_logo.svg"
+                  alt="Ranium Corp Logo"
+                  class="logo-svg"
+                />
+              </div>
+              <span>Ranium Corp</span>
+            </div>
+            <p>Smart Home Automation Solutions</p>
+            <div class="footer-contact">
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <a href="tel:+918102614395">+91 8102614395</a>
+              </div>
+              <div class="contact-item">
+                <i class="fab fa-instagram"></i>
+                <a href="https://www.instagram.com/ranium_corp" target="_blank"
+                  >@ranium_corp</a
+                >
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Purnia, Bihar, India</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-center">
+            <h4>Quick Links</h4>
+            <div class="footer-links">
+              <a href="index.html">Home</a>
+              <a href="index.html#products">Products</a>
+              <a href="index.html#contact">Contact</a>
+              <a href="calculator.html">Calculator</a>
+            </div>
+          </div>
+
+          <div class="footer-right">
+            <h4>Our Products</h4>
+            <div class="footer-links">
+              <a href="index.html#products">Touch Smart Board</a>
+              <a href="index.html#products">Curtain Motor</a>
+              <a href="index.html#products">Smart Biometric Lock</a>
+              <a href="index.html#products">R-Motor</a>
+              <a href="index.html#products">IP Camera System</a>
+              <a href="index.html#products">Microwave Sensor</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="footer-bottom-content">
+            <p>&copy; 2025 Ranium Corp. All rights reserved.</p>
+            <div class="social-links">
+              <a href="tel:+918102614395" title="Call Us">
+                <i class="fas fa-phone"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/ranium_corp"
+                target="_blank"
+                title="Instagram"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function calculateTotal() {
+        const cameraCount =
+          parseInt(document.getElementById("camera-count").value) || 1;
+
+        // Update camera quantities
+        document.getElementById("camera-qty").textContent = cameraCount;
+        document.getElementById("install-qty").textContent = cameraCount;
+
+        // Calculate camera prices
+        const cameraMinPrice = cameraCount * 3000;
+        const cameraMaxPrice = cameraCount * 3500;
+        document.getElementById(
+          "camera-price"
+        ).textContent = `₹${cameraMinPrice.toLocaleString()} - ₹${cameraMaxPrice.toLocaleString()}`;
+
+        // Calculate installation price
+        const installationPrice = cameraCount * 600;
+        document.getElementById(
+          "install-price"
+        ).textContent = `₹${installationPrice.toLocaleString()}`;
+
+        // Determine NVR type and price based on camera count
+        let nvrType, nvrMinPrice, nvrMaxPrice;
+
+        if (cameraCount <= 10) {
+          nvrType = "10-Channel NVR";
+          nvrMinPrice = 6000;
+          nvrMaxPrice = 7000;
+        } else if (cameraCount <= 16) {
+          nvrType = "16-Channel NVR";
+          nvrMinPrice = 9000;
+          nvrMaxPrice = 10000;
+        } else if (cameraCount <= 32) {
+          nvrType = "32-Channel NVR";
+          nvrMinPrice = 17000;
+          nvrMaxPrice = 18000;
+        } else {
+          nvrType = "64-Channel NVR";
+          nvrMinPrice = 38000;
+          nvrMaxPrice = 38000;
+        }
+
+        document.getElementById("nvr-type").textContent = nvrType;
+        document.getElementById(
+          "nvr-price"
+        ).textContent = `₹${nvrMinPrice.toLocaleString()} - ₹${nvrMaxPrice.toLocaleString()}`;
+
+        // Calculate total prices
+        const hddMin = 6000,
+          hddMax = 7000;
+        const cableMin = 7000,
+          cableMax = 9000;
+
+        const totalMin =
+          cameraMinPrice + nvrMinPrice + hddMin + cableMin + installationPrice;
+        const totalMax =
+          cameraMaxPrice + nvrMaxPrice + hddMax + cableMax + installationPrice;
+
+        document.getElementById(
+          "min-total"
+        ).textContent = `₹${totalMin.toLocaleString()}`;
+        document.getElementById(
+          "max-total"
+        ).textContent = `₹${totalMax.toLocaleString()}`;
+      }
+
+      function requestQuote() {
+        const cameraCount = document.getElementById("camera-count").value;
+        window.location.href = `tel:+918102614395`;
+      }
+
+      // Initialize calculator on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        calculateTotal();
+      });
+    </script>
+  </body>
+</html>
