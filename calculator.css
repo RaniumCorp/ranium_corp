@@ -35,7 +35,7 @@ body {
     width: 100%;
 }
 @font-face {
-    font-family: 'Good Times';
+    font-family: 'Good Time';
     src: url('./fonts/good-times.woff2') format('woff2'),
          url('./fonts/good-times.woff') format('woff'),
          url('./fonts/good-times.ttf') format('truetype');
