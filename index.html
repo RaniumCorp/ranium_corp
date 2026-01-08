@@ -537,18 +537,86 @@
 
       var player1, player2;
       var currentlyPlaying = 1;
+      var playersReady = { video1: false, video2: false };
+
+      // Check if mobile view
+      function isMobileView() {
+        return window.innerWidth <= 768;
+      }
+
+      // Scroll to a video card smoothly
+      function scrollToVideo(videoId) {
+        var videoCard = document.getElementById(videoId).closest('.video-card');
+        if (videoCard) {
+          videoCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      // Setup Intersection Observer for mobile auto-play
+      function setupIntersectionObserver() {
+        if (!('IntersectionObserver' in window)) return;
+
+        var observer = new IntersectionObserver(function(entries) {
+          if (!isMobileView()) return;
+
+          entries.forEach(function(entry) {
+            var videoId = entry.target.querySelector('iframe').id;
+            var player = videoId === 'video1' ? player1 : player2;
+            var otherPlayer = videoId === 'video1' ? player2 : player1;
+
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+              // Video is more than 60% visible - play it
+              if (player && playersReady[videoId]) {
+                try {
+                  if (otherPlayer && playersReady[videoId === 'video1' ? 'video2' : 'video1']) {
+                    otherPlayer.pauseVideo();
+                  }
+                  player.playVideo();
+                  currentlyPlaying = videoId === 'video1' ? 1 : 2;
+                } catch (e) {
+                  console.log('Player not ready');
+                }
+              }
+            } else if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
+              // Video is less than 30% visible - pause it
+              if (player && playersReady[videoId]) {
+                try {
+                  player.pauseVideo();
+                } catch (e) {
+                  console.log('Player not ready');
+                }
+              }
+            }
+          });
+        }, {
+          threshold: [0, 0.3, 0.6, 1.0]
+        });
+
+        // Observe both video cards
+        document.querySelectorAll('.video-card').forEach(function(card) {
+          observer.observe(card);
+        });
+      }
 
       function onYouTubeIframeAPIReady() {
         player1 = new YT.Player("video1", {
           events: {
             onReady: function (event) {
               event.target.mute();
-              event.target.playVideo();
+              playersReady.video1 = true;
+              // Only auto-play video1 if not mobile or if it's visible
+              if (!isMobileView()) {
+                event.target.playVideo();
+              }
             },
             onStateChange: function (event) {
               if (event.data === YT.PlayerState.ENDED) {
                 // Video 1 ended, play video 2
                 currentlyPlaying = 2;
+                if (isMobileView()) {
+                  // Scroll to video 2 on mobile
+                  scrollToVideo('video2');
+                }
                 player2.seekTo(0);
                 player2.playVideo();
               }
@@ -560,12 +628,21 @@
           events: {
             onReady: function (event) {
               event.target.mute();
+              playersReady.video2 = true;
               event.target.pauseVideo();
+              // Setup observer after both players are ready
+              if (playersReady.video1) {
+                setupIntersectionObserver();
+              }
             },
             onStateChange: function (event) {
               if (event.data === YT.PlayerState.ENDED) {
                 // Video 2 ended, loop back to video 1
                 currentlyPlaying = 1;
+                if (isMobileView()) {
+                  // Scroll to video 1 on mobile
+                  scrollToVideo('video1');
+                }
                 player1.seekTo(0);
                 player1.playVideo();
               }
