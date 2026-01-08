@@ -126,6 +126,55 @@
         </div>
       </section>
 
+      <section class="video-showcase">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-badge">See It In Action</div>
+            <h2>Experience Ranium Products</h2>
+            <p>
+              Watch our smart home solutions in real-world scenarios. See how
+              Ranium transforms everyday living.
+            </p>
+          </div>
+
+          <div class="video-grid">
+            <div class="video-card">
+              <div class="video-wrapper">
+                <iframe
+                  id="video1"
+                  src="https://www.youtube.com/embed/LVV5QThw4nI?enablejsapi=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1"
+                  title="Ranium Smart Home Demo 1"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+                <button class="unmute-btn" data-video="video1">
+                  <i class="fas fa-volume-mute"></i>
+                  <span>Tap to Unmute</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <div class="video-wrapper">
+                <iframe
+                  id="video2"
+                  src="https://www.youtube.com/embed/pKIPIJIEN0E?enablejsapi=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1"
+                  title="Ranium Smart Home Demo 2"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+                <button class="unmute-btn" data-video="video2">
+                  <i class="fas fa-volume-mute"></i>
+                  <span>Tap to Unmute</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="products" class="products">
         <div class="container">
           <div class="section-header">
@@ -479,6 +528,84 @@
         .addEventListener("click", function () {
           document.querySelector(".nav-menu").classList.toggle("active");
         });
+
+      // YouTube IFrame API
+      var tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player1, player2;
+      var currentlyPlaying = 1;
+
+      function onYouTubeIframeAPIReady() {
+        player1 = new YT.Player("video1", {
+          events: {
+            onReady: function (event) {
+              event.target.mute();
+              event.target.playVideo();
+            },
+            onStateChange: function (event) {
+              if (event.data === YT.PlayerState.ENDED) {
+                // Video 1 ended, play video 2
+                currentlyPlaying = 2;
+                player2.seekTo(0);
+                player2.playVideo();
+              }
+            },
+          },
+        });
+
+        player2 = new YT.Player("video2", {
+          events: {
+            onReady: function (event) {
+              event.target.mute();
+              event.target.pauseVideo();
+            },
+            onStateChange: function (event) {
+              if (event.data === YT.PlayerState.ENDED) {
+                // Video 2 ended, loop back to video 1
+                currentlyPlaying = 1;
+                player1.seekTo(0);
+                player1.playVideo();
+              }
+            },
+          },
+        });
+      }
+
+      // Unmute button functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const unmuteButtons = document.querySelectorAll(".unmute-btn");
+
+        unmuteButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const videoId = this.getAttribute("data-video");
+            const icon = this.querySelector("i");
+            const text = this.querySelector("span");
+            const player = videoId === "video1" ? player1 : player2;
+
+            if (player && typeof player.isMuted === "function") {
+              try {
+                if (player.isMuted()) {
+                  player.unMute();
+                  player.setVolume(100);
+                  icon.className = "fas fa-volume-up";
+                  text.textContent = "Tap to Mute";
+                  this.classList.add("active");
+                } else {
+                  player.mute();
+                  icon.className = "fas fa-volume-mute";
+                  text.textContent = "Tap to Unmute";
+                  this.classList.remove("active");
+                }
+              } catch (e) {
+                console.log("Player not ready yet");
+              }
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>
